@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="form.js"></script>
+    <noscript>You need to enable Javascript to use this form.</noscript>
+    <style>
+      colorPalet {
+        color: #0033A0;
+        color: #002880;
+        color: #8799D0;
+        color: #95D600;
+        color: #FF9E16;
+        color: #45BCE5;
+        color: #2F3847;
+      }
+      
+      .required-label:before {
+        content: "*";
+        color: red;
+        font-weight: bold;
+      }
+      .btn-submit{
+        background-color:#0033A0;
+      }
+
+      h1 {
+        background-color:#0033A0;
+        color : #FFF;
+        font-size: 32px;
+        padding-left: 2%;
+        padding-right: 10%;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        height:80px
+      }     
+
+      h2 {
+        font-size: 24px;
+        color: #2F3847;
+      }
+
+      form {
+        margin-left: 10%;
+        margin-right: 10%;
+        padding: 20px;
+        border: 2px solid #F3F6F9;
+        border-radius: 5px;
+        color: #2F3847;
+      }
+
+      .header {
+        background-color:#0033A0;
+      }
+
+      .img-logo {
+        height: 80px;
+        padding-right:10%;
+        padding-left: 10%;
+        background-color:#0033A0;
+      }
+      
+      
+
+    </style>
+  </head>
+
+  <body>
+    <div class="row">
+        <div class="col-1 header">
+          <img class="img-responsive img-logo" src="AllstateLogo.png"/>
+        </div>
+        <div class="col-11 header">
+          <h1> New Employee Onboarding Form </h1>
+        </div>
+
+    
+    </div>
+    
+    
+    <form onsubmit="form_OS()">
+    
+      <div>
+      <h2> User Details </h2>
+      <div class="form-group row">
+        <label id="firstnameLabel" for="firstname" class="col-4 col-form-label required-label">First Name</label> 
+        <div class="col-8">
+          <input id="firstname" name="firstname" placeholder="e.g. John" type="text" required="required" class="form-control" onchange="firstname_OC()">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label id="lastnameLabel" for="lastname" class="col-4 col-form-label required-label">Last Field</label> 
+        <div class="col-8">
+          <input id="lastname" name="lastname" placeholder="e.g. Healy" type="text" required="required" class="form-control" onchange="lastname_OC()">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label id="dateOfBirthLabel" for="dateOfBirth" class="col-4 col-form-label required-label">Date of Birth</label> 
+        <div class="col-8">
+          <input id="dateOfBirth" name="dateOfBirth" type="date" required="required" class="form-control" onchange="dateOfBirth_OC()">
+        </div>
+      </div>
+    </div> 
+
+    <div>
+    <h2> Team Details </h2>
+      <div class="form-group row">
+        <label id="areaLabel" for="area" class="col-4 col-form-label required-label">Area</label> 
+        <div class="col-8">
+          <select id="area" name="area" required="required" class="custom-select" onchange="area_OC()">
+            <option>-- None --</option>
+            <option value="Allstate Benefits">Allstate Benefits</option>
+            <option value="Arity">Arity</option>
+            <option value="ATSV Finance">ATSV Finance</option>
+            <option value="Claims Technology Services">Claims Technology Services</option>
+            <option value="Compozed">Compozed</option>
+            <option value="Compute Services">Compute Services</option>
+            <option value="Information Security">Information Security</option>
+            <option value="Human Resources">Human Resources</option>
+            <option value="Product Technology">Product Technology</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label id="teamNameLabel" for="teamName" class="col-4 col-form-label required-label">Team Name</label> 
+        <div class="col-8">
+          <input id="teamName" name="teamName" required="required" placeholder="e.g. Service Catalog Team" type="text" class="form-control" onchange="teamName_OC()">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label id="officeLabel" for="office" class="col-4 col-form-label required-label">Office</label> 
+        <div class="col-8">
+          <select id="office" name="office" required="required" class="custom-select" onchange="office_OC()">
+            <option>-- None --</option>
+            <option value="Belfast">Belfast</option>
+            <option value="Derry">Derry</option>
+            <option value="Strabane">Strabane</option>
+          </select>
+        </div>
+      </div>
+    </div> 
+
+    <div>
+    <h2> Accesses Required </h2>
+      <div class="form-group row">
+        <label id="accessLabel" class="col-4 col-form-label required-label">Please select any accesses required:</label>
+        <div class="col-8">
+          <div class="custom-controls-stacked">
+            <div class="custom-control custom-checkbox">
+              <input name="accessRequired" id="accessRequired_0" type="checkbox" class="custom-control-input" value="gitHub" onchange="access_OC()"> 
+              <label for="accessRequired_0" class="custom-control-label">GitHub</label>
+            </div>
+          </div>
+          <div class="custom-controls-stacked">
+            <div class="custom-control custom-checkbox">
+              <input name="accessRequired" id="accessRequired_1" type="checkbox" class="custom-control-input" value="talentConnection" onchange="access_OC()">  
+              <label for="accessRequired_1" class="custom-control-label">TalentConnection</label>
+            </div>
+          </div>
+          <div class="custom-controls-stacked">
+            <div class="custom-control custom-checkbox">
+              <input name="accessRequired" id="accessRequired_2" type="checkbox" class="custom-control-input" value="jenkins" onchange="access_OC()"> 
+              <label for="accessRequired_2" class="custom-control-label">Jenkins</label>
+            </div>
+          </div>
+          <div class="custom-controls-stacked">
+            <div class="custom-control custom-checkbox">
+              <input name="accessRequired" id="accessRequired_3" type="checkbox" class="custom-control-input" value="versionOne" onchange="access_OC()">  
+              <label for="accessRequired_3" class="custom-control-label">VersionOne</label>
+            </div>
+          </div>
+          <div class="custom-controls-stacked">
+            <div class="custom-control custom-checkbox">
+              <input name="accessRequired" id="accessRequired_4" type="checkbox" class="custom-control-input" value="microsoftTeams" onchange="access_OC()">  
+              <label for="accessRequired_4" class="custom-control-label">Microsoft Teams</label>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="form-group row">
+        <div class="offset-4 col-8">
+          <button name="submit" type="submit" class="btn btn-primary btn-submit">Submit</button>
+        </div>
+      </div>
+    </div> 
+
+    </form>
+  </body>
+</html>

@@ -5,7 +5,7 @@ import axios from 'axios';
 function Read() {
 
   const [tableData, setTableData] = useState([]);
-  const [id, setID] = useState();
+  const [id, setID] = useState('');
 
   const callMockAPI = () => {
 

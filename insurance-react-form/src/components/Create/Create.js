@@ -6,9 +6,9 @@ import './Create.css';
 
 function Create() {
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [prefix, setPrefix] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
   const [phone, setPhone] = useState('');
   const [addressLine1, setAddressLine1] = useState('');
   const [addressLine2, setAddressLine2] = useState('');
@@ -17,38 +17,37 @@ function Create() {
   const [vehicleType, setVehicleType] = useState('');
   const [engineSize, setEngineSize] = useState('');
   const [additionalDrivers, setAdditionalDrivers] = useState('');
-  const [commercialPurposes, setCommercialPurposes] = useState('');
-  const [usedOutsideState, setUsedOutsideState] = useState('');
-  const [dateRegistered, setDateRegistered] = useState('');
+  const [commercialPurposes, setCommercialPurposes] = useState(false);
+  const [usedOutsideState, setUsedOutsideState] = useState(false);
+  const [dateRegistered, setDateRegistered] = useState(new Date());
   const [currentValue, setCurrentValue] = useState('');
   let history = useHistory();
 
   const callMockAPI = () => {
 
     const formData = {
-      firstName,
-      lastName,
       prefix,
+      firstname,
+      lastname,
       phone,
       addressLine1,
       addressLine2,
       city,
-      postcode
+      postcode,
+      vehicleType,
+      engineSize,
+      additionalDrivers,
+      commercialPurposes,
+      usedOutsideState,
+      dateRegistered,
+      currentValue
     }
 
-    const endpointURL = "https://6151d1824a5f22001701d45d.mockapi.io/api/v1/carInsurance";
+    const endpointURL = "https://615d6dee12571a001720760b.mockapi.io/car-insurance";
     axios.post(endpointURL, formData)
-      .then(() => history.push("/read"))
+      .then(() => history.push("/"))
       .catch(err => console.log(err));
   }
-
-  const prefixOptions = [
-    { text: 'Mr', value: 'Mr' },
-    { text: 'Mrs', value: 'Mrs' },
-    { text: 'Miss', value: 'Miss' },
-    { text: 'Ms', value: 'Ms' },
-    { text: 'Other', value: 'Other' },
-  ]
 
   const vehicleOptions = [
     { text: 'Cabriolet', value: 'Cabriolet' },
@@ -73,8 +72,6 @@ function Create() {
     { text: '3', value: '3' },
     { text: '4', value: '4' }
   ]
-
-
 
   function validatePhone(phoneNo) {
     var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -104,46 +101,75 @@ function Create() {
       <hr />
 
       <Form >
-
+        <h3> Customer Details </h3>
         <Form.Group >
-          <Form.Select
+          <Form.Input
             fluid
+            id='prefix'
             label='Prefix'
-            options={prefixOptions}
             placeholder='Prefix'
-            onChange={e => setPrefix(e.target.textContent)}
+            onChange={e => setPrefix(e.target.value)}
             width={2} />
-          <Form.Input fluid label='First name' placeholder='First name'
-            onChange={e => setFirstName(e.target.value)}
+          <Form.Input
+            fluid
+            id='firstname'
+            label='First name'
+            placeholder='First name'
+            onChange={e => setFirstname(e.target.value)}
             width={7} />
-          <Form.Input fluid label='Last name' placeholder='Last name'
-            onChange={e => setLastName(e.target.value)}
+          <Form.Input
+            fluid
+            id='lastname'
+            label='Last name'
+            placeholder='Last name'
+            onChange={e => setLastname(e.target.value)}
             width={7} />
         </Form.Group>
 
-        <Form.Input fluid label='Phone' placeholder='Phone'
+        <Form.Input
+          fluid
           id='phone'
+          label='Phone'
+          placeholder='Phone'
           onBlur={e => validatePhone(e.target.value)}
           width={8} />
 
-        <Form.Input fluid label='Address Line 1' placeholder='Address Line 1'
+        <Form.Input
+          fluid
+          id='addressLine1'
+          label='Address Line 1'
+          placeholder='Address Line 1'
           onChange={e => setAddressLine1(e.target.value)}
           width={16} />
-        <Form.Input fluid label='Address Line 2' placeholder='Address Line 2'
+        <Form.Input
+          fluid
+          id='addressLine2'
+          label='Address Line 2'
+          placeholder='Address Line 2'
           onChange={e => setAddressLine2(e.target.value)}
           width={16} />
 
         <Form.Group >
-          <Form.Input fluid label='City' placeholder='City'
+          <Form.Input
+            fluid
+            id='city'
+            label='City'
+            placeholder='City'
             onChange={e => setCity(e.target.value)}
             width={8} />
-          <Form.Input fluid label='Postcode' placeholder='Postcode'
+          <Form.Input
+            fluid
+            id='postcode'
+            label='Postcode'
+            placeholder='Postcode'
             onChange={e => setPostcode(e.target.value)}
             width={8} />
         </Form.Group>
 
+        <h3> Vehicle Details </h3>
         <Form.Select
           fluid
+          id='vehicleType'
           label='Vehicle Type'
           options={vehicleOptions}
           placeholder='Vehicle Type'
@@ -152,6 +178,7 @@ function Create() {
 
         <Form.Select
           fluid
+          id='engineSize'
           label='Engine Size'
           options={engineSizeOptions}
           placeholder='Engine Size'
@@ -160,6 +187,7 @@ function Create() {
 
         <Form.Select
           fluid
+          id='additionalDrivers'
           label='Additional Drivers'
           options={additionalDriversOptions}
           placeholder='Additional Drivers'
@@ -167,16 +195,22 @@ function Create() {
           width={6} />
 
         <Form.Field>
-          <Checkbox label='Will the vehicle be used for commerical purposes?' onChange={e => setCommercialPurposes(e.target.checked)} />
+          <Checkbox
+            id='commercialPurposes'
+            label='Will the vehicle be used for commerical purposes?'
+            onChange={e => setCommercialPurposes(e.target.checked)} />
         </Form.Field>
         <Form.Field>
-          <Checkbox label='Will the vehicle be used outside the registered state?' onChange={e => setUsedOutsideState(e.target.checked)} />
+          <Checkbox
+            id='usedOutsideState'
+            label='Will the vehicle be used outside the registered state?'
+            onChange={e => setUsedOutsideState(e.target.checked)} />
         </Form.Field>
 
         <Form.Field fluid width={4}>
           <div class="form-group row">
             <label id="currentValueLabel" for="currentValue" class="col-4 col-form-label required-label">What is the current value of the vehicle?</label>
-            <input type="number" id="currentValue" name="currentValue" onChange={e => setCurrentValue(e.target.checked)}
+            <input type="number" id="currentValue" name="currentValue" onChange={e => setCurrentValue(e.target.value)}
               min="00" max="50000" />
           </div>
         </Form.Field>
@@ -195,6 +229,7 @@ function Create() {
           onClick={callMockAPI}
         >Submit</Button>
       </Form>
+
     </div>
   );
 }

@@ -1,6 +1,54 @@
 .App {
+  /* height: 50vh; */
+  padding:10px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   flex-direction: column;
+  background-color: #FFF;
  }
+
+ .header {
+  background-color:#0033A0;
+}
+
+ h1 {
+  color : #FFF;
+  font-size: 32px;
+  padding-left: 2%;
+  padding-right: 10%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height:80px;
+}     
+
+.main-content {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 2px solid #DEE5E7;
+  border-radius: 5px;
+  color: #2F3847;
+}
+
+colorPalet {
+  color: #0033A0;
+  color: #002880;
+  color: #8799D0;
+  color: #95D600;
+  color: #FF9E16;
+  color: #45BCE5;
+  color: #2F3847;
+}
+
+.ui.input {
+  position: relative;
+  font-weight: normal;
+  font-style: normal;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  color: #FF00FF;
+}

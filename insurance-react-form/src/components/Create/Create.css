@@ -1,0 +1,10 @@
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #DEE5E7;
+    background-color: #DEE5E7;
+}
+
+.checkbox input {
+    float: right;
+  }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Checkbox, TextArea } from 'semantic-ui-react';
+import { Button, Form, Checkbox, TextArea, Grid } from 'semantic-ui-react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
 
@@ -168,32 +168,52 @@ function Create() {
         </Form.Group>
 
         <h3> Vehicle Details </h3>
-        <Form.Select
-          fluid
-          id='vehicleType'
-          label='Vehicle Type'
-          options={vehicleOptions}
-          placeholder='Vehicle Type'
-          onChange={e => setVehicleType(e.target.textContent)}
-          width={6} />
+        <Grid divided='vertically'>
+          <Grid.Row columns={2}>
+            <Grid.Column>
+              <Form.Select
+                fluid
+                id='vehicleType'
+                label='Vehicle Type'
+                options={vehicleOptions}
+                placeholder='Vehicle Type'
+                onChange={e => setVehicleType(e.target.textContent)}
+              />
 
-        <Form.Select
-          fluid
-          id='engineSize'
-          label='Engine Size'
-          options={engineSizeOptions}
-          placeholder='Engine Size'
-          onChange={e => setEngineSize(e.target.textContent)}
-          width={6} />
+              <Form.Select
+                fluid
+                id='engineSize'
+                label='Engine Size'
+                options={engineSizeOptions}
+                placeholder='Engine Size'
+                onChange={e => setEngineSize(e.target.textContent)}
+              />
+              <Form.Select
+                fluid
+                id='additionalDrivers'
+                label='Additional Drivers'
+                options={additionalDriversOptions}
+                placeholder='Additional Drivers'
+                onChange={e => setAdditionalDrivers(e.target.textContent)}
+              />
 
-        <Form.Select
-          fluid
-          id='additionalDrivers'
-          label='Additional Drivers'
-          options={additionalDriversOptions}
-          placeholder='Additional Drivers'
-          onChange={e => setAdditionalDrivers(e.target.textContent)}
-          width={6} />
+            </Grid.Column>
+            <Grid.Column>
+              <Form.Field fluid>
+                <label>What is the current value of the vehicle?</label>
+                <input type="number" id="currentValue" name="currentValue" onChange={e => setCurrentValue(e.target.value)}
+                  min="00" max="50000" />
+              </Form.Field>
+
+              <Form.Field>
+                <label>Date vehicle was first registered</label>
+                <div class="col-8">
+                  <input id="dateRegistered" name="dateRegistered" type="date" required="required" class="form-control" onchange={e => setDateRegistered(e.target.value)} />
+                </div>
+              </Form.Field>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
 
         <Form.Field>
           <Checkbox
@@ -208,26 +228,10 @@ function Create() {
             onChange={e => setUsedOutsideState(e.target.checked)} />
         </Form.Field>
 
-        <Form.Field fluid width={4}>
-          <div class="form-group row">
-            <label id="currentValueLabel" for="currentValue" class="col-4 col-form-label required-label">What is the current value of the vehicle?</label>
-            <input type="number" id="currentValue" name="currentValue" onChange={e => setCurrentValue(e.target.value)}
-              min="00" max="50000" />
-          </div>
-        </Form.Field>
-
-        <Form.Field fluid width={4}>
-          <div class="form-group row">
-            <label id="dateRegisteredLabel" for="dateRegistered" class="col-4 col-form-label">Date vehicle was first registered</label>
-            <div class="col-8">
-              <input id="dateRegistered" name="dateRegistered" type="date" required="required" class="form-control" onchange={e => setDateRegistered(e.target.value)} />
-            </div>
-          </div>
-        </Form.Field>
-
-        <Form.Field fluid width={8}>
-        <TextArea
-            id='comments' 
+        <Form.Field fluid>
+          <label>Additional Information</label>
+          <TextArea
+            id='comments'
             label='Comments'
             placeholder='If you have any additional information, please provide it here.'
             onChange={e => setComments(e.target.value)} />

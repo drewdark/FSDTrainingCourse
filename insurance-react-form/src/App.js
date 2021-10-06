@@ -6,36 +6,30 @@ import Update from './components/Update/Update'
 import Delete from './components/Delete/Delete';
 import Admin from './components/Admin/Admin';
 import { BrowserRouter, Route } from 'react-router-dom';
+import logo from './images/AllstateLogo.png';
 
 function App() {
   return (
     <BrowserRouter>
-
-      <div class="row">
-        <div class="col-12 header">
-          <h1> GB Car Insurance Portal </h1>
-        </div>
+      <div class="ui top fixed menu header">
+        <a class="item" href='/'>
+          <img src={logo} />
+        </a>
+        <h1> GB Car Insurance Portal </h1>
+        <a class="menu-item" href='/create'>Create Record</a>
+        <a class="menu-item" href='/admin'>Admin Panel</a>
       </div>
 
       <div className="main-content">
         <div className="App">
           <div>
             <Route exact path="/create" component={Create} />
-          </div>
-          <div>
             <Route exact path="/read" component={Read} />
-          </div>
-          <div>
             <Route exact path="/update" component={Update} />
-          </div>
-          <div>
             <Route exact path="/delete" component={Delete} />
-          </div>
-          <div>
             <Route exact path="/admin" component={Admin} />
           </div>
         </div>
-
       </div>
     </BrowserRouter>
   );

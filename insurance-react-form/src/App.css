@@ -43,12 +43,9 @@ colorPalet {
   color: #2F3847;
 }
 
-.ui.input {
-  position: relative;
-  font-weight: normal;
-  font-style: normal;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  color: #FF00FF;
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #DEE5E7;
+  background-color: #DEE5E7;
 }

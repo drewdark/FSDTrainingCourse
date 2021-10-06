@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button, Form, Checkbox, TextArea } from 'semantic-ui-react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
-import './Create.css';
 
 function Create() {
 

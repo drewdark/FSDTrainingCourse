@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Checkbox } from 'semantic-ui-react';
+import { Button, Form, Checkbox, TextArea } from 'semantic-ui-react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
 import './Create.css';
@@ -21,6 +21,7 @@ function Create() {
   const [usedOutsideState, setUsedOutsideState] = useState(false);
   const [dateRegistered, setDateRegistered] = useState(new Date());
   const [currentValue, setCurrentValue] = useState('');
+  const [comments, setComments] = useState('');
   let history = useHistory();
 
   const callMockAPI = () => {
@@ -40,7 +41,8 @@ function Create() {
       commercialPurposes,
       usedOutsideState,
       dateRegistered,
-      currentValue
+      currentValue,
+      comments
     }
 
     const endpointURL = "https://615d6dee12571a001720760b.mockapi.io/car-insurance";
@@ -222,6 +224,14 @@ function Create() {
               <input id="dateRegistered" name="dateRegistered" type="date" required="required" class="form-control" onchange={e => setDateRegistered(e.target.value)} />
             </div>
           </div>
+        </Form.Field>
+
+        <Form.Field fluid width={8}>
+        <TextArea
+            id='comments' 
+            label='Comments'
+            placeholder='If you have any additional information, please provide it here.'
+            onChange={e => setComments(e.target.value)} />
         </Form.Field>
 
         <Button

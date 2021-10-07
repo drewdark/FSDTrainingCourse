@@ -13,11 +13,11 @@ function App() {
     <BrowserRouter>
       <div class="ui top fixed menu header">
         <a class="item" href='/'>
-          <img src={logo} />
+          <img alt='Allstate Logo' src={logo} />
         </a>
         <h1> GB Car Insurance Portal </h1>
-        <a class="menu-item" href='/create'>Create Record</a>
-        <a class="menu-item" href='/admin'>Admin Panel</a>
+        <a class="menu-item" href='/create'>CREATE RECORD</a>
+        <a class="menu-item" href='/admin'>ADMIN PANEL</a>
       </div>
 
       <div className="main-content">

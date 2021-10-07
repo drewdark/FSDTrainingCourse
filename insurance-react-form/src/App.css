@@ -13,8 +13,12 @@
   position: relative;
     vertical-align: middle;
     line-height: 1;
-    padding: 1.92857143em 1.14285714em;
+    padding-top: 2.85em;
+    padding-bottom: 1em;
+    padding-left: 1em;
+    padding-right: 2em;
     font-weight: 400;
+    font-size: 16px;
 }
 
 .ui.menu .item>img:not(.ui) {
@@ -25,6 +29,7 @@
   display: flex;
   margin: 1rem 0;
   background: #0033A0;
+  font-family: "SourceSansPro", Helvetica, Arial, sans-serif;
   font-weight: 400;
   border: 1px solid rgba(34,36,38,.15);
   box-shadow: 0 1px 2px 0 rgb(34 36 38 / 15%);
@@ -36,7 +41,8 @@
  h1 {
   color : #FFF;
   font-size: 32px;
-  padding-left: 2%;
+  font-family: "SourceSansPro", Helvetica, Arial, sans-serif;
+  padding-left: 1%;
   padding-right: 2%;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -51,6 +57,8 @@
   border: 2px solid #DEE5E7;
   border-radius: 5px;
   color: #2F3847;
+  
+  font-family: "SourceSansPro", Helvetica, Arial, sans-serif;
 }
 
 colorPalet {

@@ -1,56 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Form, Checkbox, TextArea, Grid } from 'semantic-ui-react';
-import axios from 'axios';
-import { useHistory } from 'react-router';
+import useForm from './useForm.js';
+import validate from './validateForm.js'
 
 function Create() {
 
-  const [prefix, setPrefix] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [phone, setPhone] = useState('');
-  const [addressLine1, setAddressLine1] = useState('');
-  const [addressLine2, setAddressLine2] = useState('');
-  const [city, setCity] = useState('');
-  const [postcode, setPostcode] = useState('');
-  const [vehicleType, setVehicleType] = useState('');
-  const [engineSize, setEngineSize] = useState('');
-  const [additionalDrivers, setAdditionalDrivers] = useState('');
-  const [commercialPurposes, setCommercialPurposes] = useState(false);
-  const [usedOutsideState, setUsedOutsideState] = useState(false);
-  const [dateRegistered, setDateRegistered] = useState(new Date());
-  const [currentValue, setCurrentValue] = useState('');
-  const [comments, setComments] = useState('');
-  let history = useHistory();
-
-  const callMockAPI = () => {
-
-    const formData = {
-      prefix,
-      firstname,
-      lastname,
-      phone,
-      addressLine1,
-      addressLine2,
-      city,
-      postcode,
-      vehicleType,
-      engineSize,
-      additionalDrivers,
-      commercialPurposes,
-      usedOutsideState,
-      dateRegistered,
-      currentValue,
-      comments
-    }
-
-    const endpointURL = "https://615d6dee12571a001720760b.mockapi.io/car-insurance";
-    axios.post(endpointURL, formData)
-      .then(() => history.push("/"))
-      .catch(err => console.log(err));
-  }
+  const { handleChange, values, handleSubmit, errors } = useForm(validate);
 
   const vehicleOptions = [
+    { text: '-- None --', value: '-- None --' },
     { text: 'Cabriolet', value: 'Cabriolet' },
     { text: 'Coupe', value: 'Coupe' },
     { text: 'Estate', value: 'Estate' },
@@ -59,6 +17,7 @@ function Create() {
   ]
 
   const engineSizeOptions = [
+    { text: '-- None --', value: '-- None --' },
     { text: '1000', value: '1000' },
     { text: '1600', value: '1600' },
     { text: '2000', value: '2000' },
@@ -68,25 +27,13 @@ function Create() {
   ]
 
   const additionalDriversOptions = [
+    { text: '-- None --', value: '-- None --' },
+    { text: '0', value: '0' },
     { text: '1', value: '1' },
     { text: '2', value: '2' },
     { text: '3', value: '3' },
     { text: '4', value: '4' }
   ]
-
-  function validatePhone(phoneNo) {
-    var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-    if (phoneNo.match(regex)) {
-      setPhone(phoneNo)
-      return true;
-    }
-    else {
-      alert("Please enter telephone number in correct format");
-      document.getElementById("phone").value = "";
-      setPhone("");
-      return false;
-    }
-  }
 
   return (
     <div>
@@ -107,108 +54,147 @@ function Create() {
           <Form.Input
             fluid
             id='prefix'
+            name='prefix'
             label='Prefix'
             placeholder='Prefix'
-            onChange={e => setPrefix(e.target.value)}
-            width={2} />
+            width={2}
+            value={values.prefix}
+            onChange={handleChange}
+          />
           <Form.Input
             fluid
             id='firstname'
+            name='firstname'
             label='First name'
             placeholder='First name'
-            onChange={e => setFirstname(e.target.value)}
-            width={7} />
+            width={7}
+            value={values.firstname}
+            onChange={handleChange}
+          />
           <Form.Input
             fluid
             id='lastname'
+            name='lastname'
             label='Last name'
             placeholder='Last name'
-            onChange={e => setLastname(e.target.value)}
-            width={7} />
+            width={7}
+            value={values.lastname}
+            onChange={handleChange}
+          />
         </Form.Group>
 
         <Form.Input
           fluid
           id='phone'
+          name='phone'
           label='Phone'
           placeholder='Phone'
-          onBlur={e => validatePhone(e.target.value)}
-          width={8} />
+          width={8}
+          value={values.phone}
+          onChange={handleChange} />
 
         <Form.Input
           fluid
           id='addressLine1'
+          name='addressLine1'
           label='Address Line 1'
           placeholder='Address Line 1'
-          onChange={e => setAddressLine1(e.target.value)}
-          width={16} />
+          width={16}
+          value={values.addressLine1}
+          onChange={handleChange}
+        />
         <Form.Input
           fluid
           id='addressLine2'
+          name='addressLine2'
           label='Address Line 2'
           placeholder='Address Line 2'
-          onChange={e => setAddressLine2(e.target.value)}
-          width={16} />
+          width={16}
+          value={values.addressLine2}
+          onChange={handleChange} />
 
         <Form.Group >
           <Form.Input
             fluid
             id='city'
+            name='city'
             label='City'
             placeholder='City'
-            onChange={e => setCity(e.target.value)}
-            width={8} />
+            width={8}
+            value={values.city}
+            onChange={handleChange} />
           <Form.Input
             fluid
             id='postcode'
+            name='postcode'
             label='Postcode'
             placeholder='Postcode'
-            onChange={e => setPostcode(e.target.value)}
-            width={8} />
+            width={8}
+            value={values.postcode}
+            onChange={handleChange} />
         </Form.Group>
 
         <h3> Vehicle Details </h3>
         <Grid divided='vertically'>
           <Grid.Row columns={2}>
             <Grid.Column>
-              <Form.Select
-                fluid
-                id='vehicleType'
-                label='Vehicle Type'
-                options={vehicleOptions}
-                placeholder='Vehicle Type'
-                onChange={e => setVehicleType(e.target.textContent)}
-              />
 
-              <Form.Select
-                fluid
-                id='engineSize'
-                label='Engine Size'
-                options={engineSizeOptions}
-                placeholder='Engine Size'
-                onChange={e => setEngineSize(e.target.textContent)}
-              />
-              <Form.Select
-                fluid
-                id='additionalDrivers'
-                label='Additional Drivers'
-                options={additionalDriversOptions}
-                placeholder='Additional Drivers'
-                onChange={e => setAdditionalDrivers(e.target.textContent)}
-              />
+              <Form.Field>
+                <label>Vehicle Type</label>
+                <select fluid
+                  id='vehicleType'
+                  name='vehicleType'
+                  value={values.vehicleType}
+                  onChange={handleChange}>
+                  {vehicleOptions.map((option) => (
+                    <option value={option.value}>{option.text}</option>
+                  ))}
+                </select>
+              </Form.Field>
+
+              <Form.Field>
+                <label>Engine Size</label>
+                <select fluid
+                  id='engineSize'
+                  name='engineSize'
+                  value={values.engineSize}
+                  onChange={handleChange}>
+                  {engineSizeOptions.map((option) => (
+                    <option value={option.value}>{option.text}</option>
+                  ))}
+                </select>
+              </Form.Field>
+
+              <Form.Field>
+                <label>Additional Drivers</label>
+                <select fluid
+                  id='additionalDrivers'
+                  name='additionalDrivers'
+                  value={values.additionalDrivers}
+                  onChange={handleChange}>
+                  {additionalDriversOptions.map((option) => (
+                    <option value={option.value}>{option.text}</option>
+                  ))}
+                </select>
+              </Form.Field>
 
             </Grid.Column>
             <Grid.Column>
               <Form.Field fluid>
                 <label>What is the current value of the vehicle?</label>
-                <input type="number" id="currentValue" name="currentValue" onChange={e => setCurrentValue(e.target.value)}
-                  min="00" max="50000" />
+                <input type="number" id="currentValue" name="currentValue"
+                  min="00" max="50000"
+                  value={values.currentValue}
+                  onChange={handleChange}
+                />
               </Form.Field>
 
               <Form.Field>
                 <label>Date vehicle was first registered</label>
                 <div class="col-8">
-                  <input id="dateRegistered" name="dateRegistered" type="date" required="required" class="form-control" onchange={e => setDateRegistered(e.target.value)} />
+                  <input id="dateRegistered" name="dateRegistered" type="date" required="required" class="form-control"
+                    value={values.dateRegistered}
+                    onChange={handleChange} />
                 </div>
               </Form.Field>
             </Grid.Column>
@@ -218,31 +204,51 @@ function Create() {
         <Form.Field>
           <Checkbox
             id='commercialPurposes'
+            name='commercialPurposes'
             label='Will the vehicle be used for commerical purposes?'
-            onChange={e => setCommercialPurposes(e.target.checked)} />
+            value={values.commercialPurposes}
+            onChange={handleChange} />
         </Form.Field>
         <Form.Field>
           <Checkbox
             id='usedOutsideState'
+            name='usedOutsideState'
             label='Will the vehicle be used outside the registered state?'
-            onChange={e => setUsedOutsideState(e.target.checked)} />
+            value={values.usedOutsideState}
+            onChange={handleChange} />
         </Form.Field>
 
         <Form.Field fluid>
           <label>Additional Information</label>
           <TextArea
             id='comments'
+            name='comments'
             label='Comments'
             placeholder='If you have any additional information, please provide it here.'
-            onChange={e => setComments(e.target.value)} />
+            value={values.comments}
+            onChange={handleChange} />
         </Form.Field>
 
         <Button
           type='submit'
-          onClick={callMockAPI}
+          onClick={handleSubmit}
         >Submit</Button>
       </Form>
 
+      <div className='errors'>
+        {errors.prefix && <p>{errors.prefix}</p>}
+        {errors.firstname && <p>{errors.firstname}</p>}
+        {errors.lastname && <p>{errors.lastname}</p>}
+        {errors.phone && <p>{errors.phone}</p>}
+        {errors.addressLine1 && <p>{errors.addressLine1}</p>}
+        {errors.city && <p>{errors.city}</p>}
+        {errors.postcode && <p>{errors.postcode}</p>}
+        {errors.vehicleType && <p>{errors.vehicleType}</p>}
+        {errors.engineSize && <p>{errors.engineSize}</p>}
+        {errors.additionalDrivers && <p>{errors.additionalDrivers}</p>}
+        {errors.currentValue && <p>{errors.currentValue}</p>}
+        {errors.dateRegistered && <p>{errors.dateRegistered}</p>}
+      </div>
     </div>
   );
 }

@@ -77,3 +77,7 @@ hr {
   border: 1px solid #DEE5E7;
   background-color: #DEE5E7;
 }
+
+.errors{
+  color:red;
+}

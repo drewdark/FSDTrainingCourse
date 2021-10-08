@@ -181,7 +181,7 @@ function Create() {
             </Grid.Column>
             <Grid.Column>
               <Form.Field fluid>
-                <label>What is the current value of the vehicle?</label>
+                <label>What is the current value (£) of the vehicle?</label>
                 <input type="number" id="currentValue" name="currentValue"
                   min="00" max="50000"
                   value={values.currentValue}

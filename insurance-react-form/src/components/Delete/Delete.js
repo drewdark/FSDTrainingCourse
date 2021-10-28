@@ -8,10 +8,27 @@ function Delete() {
 
   const callMockAPI = () => {
 
-    const endpointURL = `https://615d6dee12571a001720760b.mockapi.io/car-insurance/${id}`;
+    //const endpointURL = `https://615d6dee12571a001720760b.mockapi.io/car-insurance/${id}`;
+    const endpointURL = `http://localhost:8080/requests/${id}`;
     axios.delete(endpointURL)
       .then(alert('Record has been successfully deleted.'))
       .catch(err => console.log(err));
+  }
+
+  const handleChangeID = (driverID) => {
+
+    setID(driverID);
+    //const endpointURL = `https://615d6dee12571a001720760b.mockapi.io/car-insurance/${driverID}`;
+    const endpointURL = `http://localhost:8080/requests/${driverID}`;
+    axios.get(endpointURL)
+      .catch(err => alertNoRecordFound(err,driverID))
+  }
+
+  const alertNoRecordFound = (err,driverID) =>
+  {
+    console.log(err);
+    alert('No record found with Driver ID ' + driverID);
+    document.getElementById("driverIDDelete").value = '';
   }
 
   return (
@@ -22,10 +39,10 @@ function Delete() {
       <Form>
         <Form.Input
           fluid
-          id='driverID'
+          id='driverIDDelete'
           label='Driver ID'
           placeholder='Driver ID'
-          onChange={e => setID(e.target.value)}
+          onBlur={e => handleChangeID(e.target.value)}
           width={4}
         />
         <Button

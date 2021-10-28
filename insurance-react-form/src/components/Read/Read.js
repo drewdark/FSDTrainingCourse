@@ -9,11 +9,22 @@ function Read() {
 
   const callMockAPI = () => {
 
-    const endpointURL = `https://615d6dee12571a001720760b.mockapi.io/car-insurance/${id}`;
+    //const endpointURL = `https://615d6dee12571a001720760b.mockapi.io/car-insurance/${id}`;
+    const endpointURL = `http://localhost:8080/requests/${id}`;
     axios.get(endpointURL)
-      .then(response => setTableData(response.data))
-      .then(document.getElementById("table").hidden = false)
-      .catch(err => console.log(err));
+      .then(response => displayTable(response.data))
+      .catch(err => alertNoRecordFound(err,id));
+  }
+
+  const alertNoRecordFound = (err,driverID) =>
+  {
+    console.log(err);
+    alert('No record found with Driver ID ' + driverID);
+    document.getElementById("driverIDRead").value = '';
+  }
+  const displayTable = (data) =>{
+    setTableData(data)
+    document.getElementById("table").hidden = false
   }
 
   return (
@@ -24,7 +35,7 @@ function Read() {
       <Form>
           <Form.Input
             fluid
-            id='driverID'
+            id='driverIDRead'
             label='Driver ID'
             placeholder='Driver ID'
             onChange={e => setID(e.target.value)}

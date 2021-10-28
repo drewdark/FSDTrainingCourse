@@ -54,7 +54,8 @@ const useForm = (validate) => {
     useEffect(
         () => {
             if (Object.keys(errors).length === 0 && isSubmitting) {
-                const endpointURL = "https://615d6dee12571a001720760b.mockapi.io/car-insurance";
+                //const endpointURL = "https://615d6dee12571a001720760b.mockapi.io/car-insurance";
+                const endpointURL = `http://localhost:8080/requests`;
                 axios.post(endpointURL, values)
                     .then(() => history.push("/"))
                     .catch(err => console.log(err));

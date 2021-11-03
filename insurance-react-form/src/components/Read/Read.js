@@ -8,9 +8,7 @@ function Read() {
   const [id, setID] = useState('');
 
   
-  const callMockAPI = () => {
-
-    //const endpointURL = `https://615d6dee12571a001720760b.mockapi.io/car-insurance/${id}`;
+  const getRecord = () => {
     const endpointURL = `http://localhost:8080/requests/${id}`;
     axios.get(endpointURL)
       .then(response => handleResponse(response.data))
@@ -18,7 +16,7 @@ function Read() {
   }
   
   const handleResponse = (data) =>{
-    if(data)
+    if(data && !Array.isArray(data))
     {
       setTableData(data)
       document.getElementById("table").hidden = false;
@@ -47,12 +45,9 @@ function Read() {
           />
           <Button
             type='submit'
-            onClick={callMockAPI}
+            onClick={getRecord}
           >View Details</Button>
-          
-
       </Form>
-
 
       <Table id='table' celled hidden>
         <Table.Header>
@@ -81,12 +76,8 @@ function Read() {
           </Table.Row>
         </Table.Body>
       </Table>
-
     </div>
   );
-
-
-
 }
 
 export default Read;

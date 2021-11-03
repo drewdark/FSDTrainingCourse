@@ -6,33 +6,47 @@ function Delete() {
 
   const [id, setID] = useState('');
   const [requestData, setRequestData] = useState([]);
+  const [open, setOpen] = React.useState(false)
+  const [disabled, setDisabled] = React.useState(true)
+  
+  const disableDeleteButton = () => {
+    setDisabled(true);
+  }
 
-  const callMockAPI = () => {
-
-    //const endpointURL = `https://615d6dee12571a001720760b.mockapi.io/car-insurance/${id}`;
+  const deleteRecord = () => {
     const endpointURL = `http://localhost:8080/requests/${id}`;
     axios.delete(endpointURL)
-      .then(setOpen(false))
+      .then(handleResponseDelete)
       .catch(err => console.log(err));
   }
 
-  const handleChangeID = (driverID) => {
+  const handleResponseDelete = () => {
+    setOpen(false);
+    document.getElementById("driverIDDelete").value = '';
+    setDisabled(true);
+  }
 
+  const handleChangeID = (driverID) => {
     setID(driverID);
-    //const endpointURL = `https://615d6dee12571a001720760b.mockapi.io/car-insurance/${driverID}`;
     const endpointURL = `http://localhost:8080/requests/${driverID}`;
     axios.get(endpointURL)
-      .then(response => setRequestData(response.data))
-      .catch(err => alertNoRecordFound(err, driverID))
+      .then(response => handleResponseGet(response.data, driverID))
+      .catch(err => console.log(err));
   }
 
-  const alertNoRecordFound = (err, driverID) => {
-    console.log(err);
-    alert('No record found with Driver ID ' + driverID);
-    document.getElementById("driverIDDelete").value = '';
+  const handleResponseGet = (data, driverID) =>{
+    if(data)
+    {
+      setRequestData(data);
+      setDisabled(false);
+    }
+    else
+    {
+      alert('No record found with Driver ID ' + driverID);
+      document.getElementById("driverIDDelete").value = '';
+      setDisabled(true);
+    }
   }
-
-  const [open, setOpen] = React.useState(false)
 
   return (
     <div className="Delete">
@@ -46,6 +60,7 @@ function Delete() {
           label='Driver ID'
           placeholder='Driver ID'
           onBlur={e => handleChangeID(e.target.value)}
+          onFocus={disableDeleteButton}
           width={4}
         />
 
@@ -53,7 +68,7 @@ function Delete() {
           onClose={() => setOpen(false)}
           onOpen={() => setOpen(true)}
           open={open}
-          trigger={<Button>Delete</Button>}
+          trigger={<Button id='deleteButton' disabled={disabled}>Delete</Button>}
         >
           <Modal.Header>Delete Record</Modal.Header>
           <Modal.Content image>
@@ -87,7 +102,7 @@ function Delete() {
               content="Delete"
               labelPosition='right'
               icon='trash alternate'
-              onClick={callMockAPI}
+              onClick={deleteRecord}
               negative
             />
           </Modal.Actions>

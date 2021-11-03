@@ -7,24 +7,28 @@ function Read() {
   const [tableData, setTableData] = useState([]);
   const [id, setID] = useState('');
 
+  
   const callMockAPI = () => {
 
     //const endpointURL = `https://615d6dee12571a001720760b.mockapi.io/car-insurance/${id}`;
     const endpointURL = `http://localhost:8080/requests/${id}`;
     axios.get(endpointURL)
-      .then(response => displayTable(response.data))
-      .catch(err => alertNoRecordFound(err,id));
+      .then(response => handleResponse(response.data))
+      .catch(err => console.log(err));
   }
-
-  const alertNoRecordFound = (err,driverID) =>
-  {
-    console.log(err);
-    alert('No record found with Driver ID ' + driverID);
-    document.getElementById("driverIDRead").value = '';
-  }
-  const displayTable = (data) =>{
-    setTableData(data)
-    document.getElementById("table").hidden = false
+  
+  const handleResponse = (data) =>{
+    if(data)
+    {
+      setTableData(data)
+      document.getElementById("table").hidden = false;
+    }
+    else
+    {
+      alert('No record found with Driver ID ' + id);
+      document.getElementById("driverIDRead").value = '';
+      document.getElementById("table").hidden = true;
+    }
   }
 
   return (

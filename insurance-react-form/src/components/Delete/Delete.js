@@ -6,8 +6,9 @@ function Delete() {
 
   const [id, setID] = useState('');
   const [requestData, setRequestData] = useState([]);
-  const [open, setOpen] = React.useState(false)
-  const [disabled, setDisabled] = React.useState(true)
+  const [errorNoRecord, setErrorNoRecord] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   
   const disableDeleteButton = () => {
     setDisabled(true);
@@ -35,16 +36,17 @@ function Delete() {
   }
 
   const handleResponseGet = (data, driverID) =>{
-    if(data)
+    if(data && !Array.isArray(data))
     {
       setRequestData(data);
       setDisabled(false);
+      setErrorNoRecord(false);
     }
     else
     {
-      alert('No record found with Driver ID ' + driverID);
       document.getElementById("driverIDDelete").value = '';
       setDisabled(true);
+      setErrorNoRecord(true);
     }
   }
 
@@ -110,6 +112,8 @@ function Delete() {
 
       </Form>
 
+      {errorNoRecord && <p className='errors'>No record found with Driver ID {id}</p>}
+      
     </div>
   );
 

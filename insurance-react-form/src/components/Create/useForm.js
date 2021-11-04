@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios';
-import { useHistory } from 'react-router';
 
 const useForm = (validate) => {
 
-    
-  let history = useHistory();
 
     const [values, setValues] = useState({
         prefix: '',
@@ -28,6 +25,8 @@ const useForm = (validate) => {
 
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [openError, setOpenError] = useState(false);
+    const [openSuccess, setOpenSuccess] = useState(false);
 
     const handleChange = e => {
         if (e.target.name === 'commercialPurposes' || e.target.name === 'usedOutsideState') {
@@ -54,11 +53,14 @@ const useForm = (validate) => {
     useEffect(
         () => {
             if (Object.keys(errors).length === 0 && isSubmitting) {
-                //const endpointURL = "https://615d6dee12571a001720760b.mockapi.io/car-insurance";
                 const endpointURL = `http://localhost:8080/requests`;
                 axios.post(endpointURL, values)
-                    .then(() => history.push("/"))
+                    .then(setOpenSuccess(true))
                     .catch(err => console.log(err));
+            }
+            else if(isSubmitting)
+            {
+                setOpenError(true);
             }
         },
         [errors]
@@ -66,7 +68,7 @@ const useForm = (validate) => {
 
 
 
-    return { handleChange, values, handleSubmit, errors };
+    return { handleChange, values, handleSubmit, errors, openError, setOpenError, openSuccess, setOpenSuccess };
 }
 
 export default useForm;

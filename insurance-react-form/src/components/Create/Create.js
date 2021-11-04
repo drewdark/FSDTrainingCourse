@@ -1,11 +1,13 @@
 import React from 'react';
-import { Button, Form, Checkbox, TextArea, Grid } from 'semantic-ui-react';
+import { Button, Form, Checkbox, TextArea, Grid, Modal, Header } from 'semantic-ui-react';
 import useForm from './useForm.js';
 import validate from './validateForm.js'
+import { useHistory } from 'react-router';
 
 function Create() {
 
-  const { handleChange, values, handleSubmit, errors } = useForm(validate);
+  let history = useHistory();
+  const { handleChange, values, handleSubmit, errors, openError, setOpenError, openSuccess, setOpenSuccess } = useForm(validate);
 
   const vehicleOptions = [
     { text: '-- None --', value: '-- None --' },
@@ -235,20 +237,61 @@ function Create() {
         >Submit</Button>
       </Form>
 
-      <div className='errors'>
-        {errors.prefix && <p>{errors.prefix}</p>}
-        {errors.firstname && <p>{errors.firstname}</p>}
-        {errors.lastname && <p>{errors.lastname}</p>}
-        {errors.phone && <p>{errors.phone}</p>}
-        {errors.addressLine1 && <p>{errors.addressLine1}</p>}
-        {errors.city && <p>{errors.city}</p>}
-        {errors.postcode && <p>{errors.postcode}</p>}
-        {errors.vehicleType && <p>{errors.vehicleType}</p>}
-        {errors.engineSize && <p>{errors.engineSize}</p>}
-        {errors.additionalDrivers && <p>{errors.additionalDrivers}</p>}
-        {errors.currentValue && <p>{errors.currentValue}</p>}
-        {errors.dateRegistered && <p>{errors.dateRegistered}</p>}
-      </div>
+      <Modal
+        onClose={() => setOpenError(false)}
+        onOpen={() => setOpenError(true)}
+        open={openError}
+      >
+        <Modal.Header>Validation Error</Modal.Header>
+        <Modal.Content image>
+          <Modal.Description>
+            <Header>Please correct the following issues before submitting:</Header>
+            <div className='errors'>
+              {errors.prefix && <p>{errors.prefix}</p>}
+              {errors.firstname && <p>{errors.firstname}</p>}
+              {errors.lastname && <p>{errors.lastname}</p>}
+              {errors.phone && <p>{errors.phone}</p>}
+              {errors.addressLine1 && <p>{errors.addressLine1}</p>}
+              {errors.city && <p>{errors.city}</p>}
+              {errors.postcode && <p>{errors.postcode}</p>}
+              {errors.vehicleType && <p>{errors.vehicleType}</p>}
+              {errors.engineSize && <p>{errors.engineSize}</p>}
+              {errors.additionalDrivers && <p>{errors.additionalDrivers}</p>}
+              {errors.currentValue && <p>{errors.currentValue}</p>}
+              {errors.dateRegistered && <p>{errors.dateRegistered}</p>}
+            </div>
+          </Modal.Description>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button color='black' onClick={() => setOpenError(false)}>
+            Close
+          </Button>
+        </Modal.Actions>
+      </Modal>
+
+      <Modal
+          onClose={() => setOpenSuccess(false)}
+          onOpen={() => setOpenSuccess(true)}
+          open={openSuccess}
+        >
+          <Modal.Header>Record Successfully Added</Modal.Header>
+          <Modal.Content image>
+            <Modal.Description>
+              Thank you for using the Allstate NI Car Insurance Portal!
+            </Modal.Description>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              content="Thanks!"
+              labelPosition='right'
+              icon='thumbs up outline'
+              onClick={() => history.push("/")}
+              positive
+            />
+          </Modal.Actions>
+        </Modal>
+
+
     </div>
   );
 }

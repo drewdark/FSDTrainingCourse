@@ -6,26 +6,28 @@ function Read() {
 
   const [tableData, setTableData] = useState([]);
   const [id, setID] = useState('');
+  const [errorNoRecord, setErrorNoRecord] = useState(false);
 
   
   const getRecord = () => {
     const endpointURL = `http://localhost:8080/requests/${id}`;
     axios.get(endpointURL)
-      .then(response => handleResponse(response.data))
+      .then(response => handleResponseGet(response.data))
       .catch(err => console.log(err));
   }
   
-  const handleResponse = (data) =>{
+  const handleResponseGet = (data) =>{
     if(data && !Array.isArray(data))
     {
-      setTableData(data)
+      setTableData(data);
       document.getElementById("table").hidden = false;
+      setErrorNoRecord(false);
     }
     else
     {
-      alert('No record found with Driver ID ' + id);
       document.getElementById("driverIDRead").value = '';
       document.getElementById("table").hidden = true;
+      setErrorNoRecord(true);
     }
   }
 
@@ -48,6 +50,8 @@ function Read() {
             onClick={getRecord}
           >View Details</Button>
       </Form>
+
+      {errorNoRecord && <p className='errors'>No record found with Driver ID {id}</p>}
 
       <Table id='table' celled hidden>
         <Table.Header>

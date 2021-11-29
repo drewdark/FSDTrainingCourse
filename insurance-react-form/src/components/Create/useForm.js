@@ -27,6 +27,7 @@ const useForm = (validate) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [openError, setOpenError] = useState(false);
     const [openSuccess, setOpenSuccess] = useState(false);
+    const [quote, setQuote] = useState('');
 
     const handleChange = e => {
         if (e.target.name === 'commercialPurposes' || e.target.name === 'usedOutsideState') {
@@ -55,11 +56,13 @@ const useForm = (validate) => {
             if (Object.keys(errors).length === 0 && isSubmitting) {
                 const endpointURL = `http://localhost:8080/requests`;
                 axios.post(endpointURL, values)
+                    .then(response => setQuote(response.data.quote))
                     .then(setOpenSuccess(true))
                     .catch(err => console.log(err));
+
+
             }
-            else if(isSubmitting)
-            {
+            else if (isSubmitting) {
                 setOpenError(true);
             }
         },
@@ -68,7 +71,7 @@ const useForm = (validate) => {
 
 
 
-    return { handleChange, values, handleSubmit, errors, openError, setOpenError, openSuccess, setOpenSuccess };
+    return { handleChange, values, handleSubmit, errors, openError, setOpenError, openSuccess, setOpenSuccess, quote };
 }
 
 export default useForm;

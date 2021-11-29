@@ -7,7 +7,7 @@ import { useHistory } from 'react-router';
 function Create() {
 
   let history = useHistory();
-  const { handleChange, values, handleSubmit, errors, openError, setOpenError, openSuccess, setOpenSuccess } = useForm(validate);
+  const { handleChange, values, handleSubmit, errors, openError, setOpenError, openSuccess, setOpenSuccess, quote } = useForm(validate);
 
   const vehicleOptions = [
     { text: '-- None --', value: '-- None --' },
@@ -277,7 +277,8 @@ function Create() {
           <Modal.Header>Record Successfully Added</Modal.Header>
           <Modal.Content image>
             <Modal.Description>
-              Thank you for using the Allstate NI Car Insurance Portal!
+              <p>Thank you for using the Allstate NI Car Insurance Portal!</p>
+              <p>Your final quote is £{quote}</p>
             </Modal.Description>
           </Modal.Content>
           <Modal.Actions>
